@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<!-- HTML5 Hello world by kirupa - http://www.kirupa.com/html5/getting_your_feet_wet_html5_pg1.htm -->
+<html lang="en-us">
+<script src="http://cdn.peerjs.com/0.3/peer.js"></script>
+<head>
+<meta charset="utf-8">
+<title>Collaborant Hosting</title>
+<script src="jquery.min.js"></script>
+<script src="peer.js"></script>
+<script type="text/javascript" src="peer.min.js"></script>
+<script src="/ckeditor/ckeditor.js">
+</script>
+<script>
+  var TogetherJSConfig_hubBase = "https://bird-acosf.c9.io"
+  var TogetherJSConfig_inviteFromRoom = true;
+  TogehterJS.hub.on("form-update", function(msg){
+    TogetherJS.send({type: "notes-update",contents: $(msg.element).val(),element: msg.element});
+  });
+  TogetherJS.hub.on("notes-update",function(msg){
+    $("#notes").text(msg.contents);
+     TogetherJS.hub.on("togetherjs.hello",function(msg){
+    $("#notes").text(msg.contents);
+  });
+  });
+ 
+  CKEDITOR.replace('notes');
+</script>
+<link rel="stylesheet" href="ckeditor/contents.css">
+<script src="ckeditor/config.js"></script>
+<script src="collaborant.js"></script>
+<style>
+  #transponder-text{
+    position: relative;
+    float: left;
+    background-color:  #ee33ff;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    width: 300px;
+  }
+#header{
+	font-family: Arial, Helvetica, sans-serif;
+	font-size: xx-large;
+	font-weight: bold;
+	background-color: #000e0f;
+	border-radius: 4px;
+	padding: 10px;
+	text-align: center;
+	color: #ffffff;
+}
+.buttonStyle {
+	border-radius: 4px;
+	border: thin solid #F0E020;
+	padding: 5px;
+	background-color: #F8F094;
+	font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+	font-weight: bold;
+	color: #663300;
+	width: 75px;
+}
+
+.buttonStyle:hover {
+	border: thin solid #FFCC00;
+	background-color: #FCF9D6;
+	color: #996633;
+	cursor: pointer;
+}
+#transponder-text > .buttonStyle:active {
+	border: thin solid #99CC00;
+	background-color: #F5FFD2;
+	color: #669900;
+	cursor: pointer;
+}
+
+body,html {
+  padding: 0;
+  margin: 0;
+  font-family: Arial;
+  background-color: #eee;
+  color: #444;
+  font-size: 15px;
+  line-height: 18px;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+.connection {
+  float: left;
+  height: 250px;
+  width: 200px;
+  overflow: scroll;
+  background-color: #fff;
+  padding: 10px;
+  margin: 5px;
+  border: 1px solid #ccc;
+}
+.connection div {
+  margin: 5px 0;
+}
+.connection.active {
+  border-color: #FF7500;
+}
+h1 {
+  font-size: 15px;
+  padding: 5px 10px;
+  margin: 0 -10px 0 -10px;
+  border-bottom: 1px solid #ccc;
+  font-weight: 300;
+}
+.active h1 strong {
+  color: #FF7500;
+}
+.file, em {
+  color: #999;
+  font-style: italic;
+}
+#wrap {
+  background-color: #ddd;
+  border-width: 1px 0;
+  border-color: #ccc;
+  border-style: solid;
+}
+.clear {
+  clear: both;
+}
+.peer {
+  color: #FF7500;
+  font-weight: 600;
+}
+.you {
+  color: #0C6BA1;
+  font-weight: 600;
+}
+#pid {
+  display: inline-block;
+  padding: 5px;
+  margin: 5px;
+  border: 1px solid #ccc;
+  background-color: #fff;
+  color: #0C6BA1;
+  font-weight: 600;
+}
+.warning {
+  font-size: 12px;
+  line-height: 20px;
+  padding: 10px;
+  background-color: #333;
+  color: #fff;
+  text-shadow: 0 1px 0 rgba(0,0,0,0.4);
+  font-weight: 300;
+  border-width: 1px 0;
+  border-color: #000;
+  border-style: solid;
+}
+a {
+  color: #F2C777;
+}
+.filler {
+  display: block;
+  padding: 10px;
+}
+#actions {
+  padding: 10px;
+}
+
+button, input {
+  font-size: 15px;
+  font-family: Arial;
+  border: 1px solid #ccc;
+  border-right: 0;
+  padding: 5px;
+  background: #fff;
+  margin: 0;
+  color: #444;
+  text-shadow: 0 1px 0 rgba(255,255,255,0.4);
+}
+input:focus {
+  outline: none;
+}
+.button, button {
+  cursor: pointer;
+  background-color: #ddd;
+  border: 1px solid #ccc;
+
+
+}
+form {
+  display: inline-block;
+}
+#close {
+  background-color: #FF7500;
+  border-color: #c15c06;
+}
+
+.important {
+  font-size: 15px;
+  color: #F2C777;
+  margin-bottom: 10px;
+}
+
+</style>
+
+</style>
+<script type="text/javascript" src="https://togetherjs.com/togetherjs-min.js"></script>
+<script type="text/javascript">
+$(Collaborant.setupConnection);
+</script>
+</head>
+
+<body>
+<div id="header">Collaborant Study Session Hosting <span id="bird">Start Collaborant BIRD</span></div>
+<div class="transponder-sidebar" id="transponder-text">
+<div id="actions">
+    Your PeerJS ID is <span id="pid"></span><br>
+    Connect to a peer: <input type="text" id="rid" placeholder="Someone else's id"><input class="button" type="button" value="Connect" id="connect"><br><br>
+
+    <form id="send">
+      <input type="text" id="text" placeholder="Enter message"><input class="button" type="submit" value="Send to selected peers">
+    </form>
+    <button id="close">Close selected connections</button>
+  </div>
+
+  <div id="wrap"><div id="connections"><span class="filler">You have not yet
+        made any connections.</span></div>
+    <div class="clear"></div></div>
+
+  <div id="box" style="background: #fff; font-size: 18px;padding:40px 30px; text-align: center;">
+    Drag file here to send to active connections.
+  </div>
+  
+  
+  <div class="warning browser">
+    <div class="important">Your browser version: <span id="browsers"></span><br>
+  Currently <strong>Firefox 22+ and Google Chrome 26.0.1403.0 or above</strong> is required.</strong></div>For more up to date compatibility
+information see <a href="http://peerjs.com/status">PeerJS WebRTC
+  Status</a><br>Note that this demo may also fail if you are behind
+stringent firewalls or both you and the remote peer and behind symmetric
+NATs.
+
+<div class="log" style="color:#FF7500;text-shadow:none;padding:15px;background:#eee"><strong>Connection status</strong>:<br></div>
+</div></div>
+</div>
+<div class="vidin-student-stream"><textarea name="notes" id="notes" rows="10" cols="80">
+                This is my textarea to be replaced with CKEditor.
+            </textarea>
+            <script>
+                // Replace the <textarea id="editor1"> with a CKEditor
+                // instance, using default configuration.
+                CKEDITOR.replace( 'notes' );
+            </script></div>
+</body> 
+</html> 
+</body>
+</html>
