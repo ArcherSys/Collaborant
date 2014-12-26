@@ -199,7 +199,7 @@ form {
 </style>
 <script type="text/javascript" src="https://togetherjs.com/togetherjs-min.js"></script>
 <script type="text/javascript">
-$(Collaborant.setupConnection);
+try {$(Collaborant.setupConnection);}catch (ex){ CKEDITOR. REPLACE ('notes');}
 </script>
 </head>
 
