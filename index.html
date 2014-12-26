@@ -22,7 +22,8 @@
     $("#notes").text(msg.contents);
   });
   });
- 
+ peer.on('error', function(error)
+ {CKEDITOR.REPLACE('notes');}
   CKEDITOR.replace('notes');
 </script>
 <link rel="stylesheet" href="ckeditor/contents.css">
