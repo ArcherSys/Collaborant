@@ -1,3 +1,4 @@
 [submodule "togetherjs"]
         path = togetherjs
-    .   url = https://github.com/ArcherSys/ColaborantJSTogetherJSClient
+    .   url = https://github.com/ArcherSys/CollaborantJSTogetherJSClient
+  
