@@ -1,2 +1,3 @@
-[togetherjs]
- path "http://archersys.github.io/Collaborant/togetherjs/"
+[submodule togetherjs]
+path = togetherjs
+url ="http://archersys.github.io/Collaborant/togetherjs/"
