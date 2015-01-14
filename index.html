@@ -25,7 +25,7 @@
     $("#notes").text(msg.contents);
 
   });
-  $(document).keypress(function(e){
+  $(document).keypress(function(event){
   	if(event.which === 80){
   	  var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
     client.authenticate(function(error, client) {
