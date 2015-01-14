@@ -20,20 +20,22 @@
   });
   TogetherJS.hub.on("notes-update",function(msg){
     $("#notes").text(msg.contents);
+     localStorage.notes = msg.contents;
   });
      TogetherJS.hub.on("togetherjs.hello",function(msg){
     $("#notes").text(msg.contents);
+    localStorage.notes = msg.contents;
 
   });
-  $(document).keypress(function(event){
-  	if(event.which === 80){
+  $("#save").click(function(){
+  	
   	  var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
     client.authenticate(function(error, client) {
       if(!error){
         client.getAccountInfo(function(error, accountInfo) {
            alert("You are " + accountInfo.name + "!");
            console.log("Saving Notes...");
-           client.writeFile("notes.html", msg.contents, function(error, stat) {
+           client.writeFile("notes.html", localStorage.notes, function(error, stat) {
 
              alert("File saved as revision " + stat.versionTag);
            });
@@ -270,6 +272,7 @@ NATs.
                 // instance, using default configuration.
                 CKEDITOR.replace( 'notes' );
             </script></div>
+            <button id="save">Save</button>
 </body> 
 </html> 
 </body>
