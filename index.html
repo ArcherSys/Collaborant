@@ -27,7 +27,7 @@
     localStorage.notes = msg.contents;
 
   });
-  $("#save").click(function(){
+  $("form").submit(function(e){
   	
   	  var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
     client.authenticate(function(error, client) {
