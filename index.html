@@ -18,9 +18,29 @@
   });
   TogetherJS.hub.on("notes-update",function(msg){
     $("#notes").text(msg.contents);
+  });
      TogetherJS.hub.on("togetherjs.hello",function(msg){
     $("#notes").text(msg.contents);
+
   });
+  $(document).keypress(function(e){
+  	if(event.which === 80){
+  	  var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
+    client.authenticate(function(error, client) {
+      if(!error){
+        client.getAccountInfo(function(error, accountInfo) {
+           alert("You are " + accountInfo.name + "!");
+           console.log("Saving Notes...");
+           client.writeFile("notes.html", msg.contents, function(error, stat) {
+
+             alert("File saved as revision " + stat.versionTag);
+           });
+    });
+      }
+      
+    }); 
+  	}
+  	}
   });
  
   CKEDITOR.replace('notes');
