@@ -10,20 +10,54 @@
 <script type="text/javascript" src="peer.min.js"></script>
 <script src="/ckeditor/ckeditor.js">
 </script>
+<script type="text/javascript" src="https://togetherjs.com/togetherjs-min.js"></script>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js">
+</script>
 <script>
-  var TogetherJSConfig_hubBase = "https://bird-acosf.c9.io"
+    var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
+    client.authenticate(function(error, client) {
+var TogetherJSCOnfig_hubBase = "https://cafesync-acosf.c9.io";
+var TogetherJSConfig_toolName = "CafeSync";
+  var TogetherJSConfig_findRoom= "New";
   var TogetherJSConfig_inviteFromRoom = true;
-  TogehterJS.hub.on("form-update", function(msg){
-    TogetherJS.send({type: "notes-update",contents: $(msg.element).val(),element: msg.element});
+  TogetherJS.hub.on("form-update", function(msg){
+    $(msg.element).val(msg.contents);
+   
+      if(!error){
+        client.getAccountInfo(function(error, accountInfo) {
+           alert("You are " + accountInfo.name + "!");
+           console.log("Saving Notes...");
+           client.writeFile("notes.html", msg.contents, function(error, stat) {
+
+             alert("File saved as revision " + stat.versionTag);
+           });
+    });
+      }
+      
+    });
+    
   });
-  TogetherJS.hub.on("notes-update",function(msg){
+     TogetherJS.hub.on("togetherjs.hello", function(msg){
     $("#notes").text(msg.contents);
-     TogetherJS.hub.on("togetherjs.hello",function(msg){
-    $("#notes").text(msg.contents);
-  });
-  });
+var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
+    client.authenticate(function(error, client) {
+      if(!error){
+        client.getAccountInfo(function(error, accountInfo) {
+           alert("You are " + accountInfo.name + "!");
+           console.log("Saving Notes...");
+           client.writeFile("notes.html", msg.contents, function(error, stat) {
+
+             alert("File saved as revision " + stat.versionTag);
+           });
+    });
+      }
+      
+    });  });
+  
+ CKEDITOR.replace('notes');
  
-  CKEDITOR.replace('notes');
+ 
 </script>
 <link rel="stylesheet" href="ckeditor/contents.css">
 <script src="ckeditor/config.js"></script>
@@ -197,7 +231,6 @@ form {
 </style>
 
 </style>
-<script type="text/javascript" src="https://togetherjs.com/togetherjs-min.js"></script>
 <script type="text/javascript">
 $(Collaborant.setupConnection);
 </script>
