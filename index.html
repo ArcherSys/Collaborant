@@ -5,10 +5,12 @@
 <head>
 <meta charset="utf-8">
 <title>Collaborant Hosting</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropbox.js/0.10.2/dropbox.min.js"></script>
+
 <script src="jquery.min.js"></script>
 <script src="peer.js"></script>
 <script type="text/javascript" src="peer.min.js"></script>
-<script src="/ckeditor/ckeditor.js">
+<script src="ckeditor/ckeditor.js">
 </script>
 <script type="text/javascript" src="https://togetherjs.com/togetherjs-min.js"></script>
 
@@ -38,25 +40,51 @@ var TogetherJSConfig_toolName = "CafeSync";
     });
     
   });
+
      TogetherJS.hub.on("togetherjs.hello", function(msg){
     $("#notes").text(msg.contents);
 var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
+
+  TogetherJS.hub.on("notes-update",function(msg){
+    $("#notes").text(msg.contents);
+     localStorage.notes = msg.contents;
+  });
+     TogetherJS.hub.on("togetherjs.hello",function(msg){
+    $("#notes").text(msg.contents);
+    localStorage.notes = msg.contents;
+
+  });
+  $("form").submit(function(e){
+  	
+  	  var client = new Dropbox.Client({ key: "brwekpcno93vtpz" });
+
     client.authenticate(function(error, client) {
       if(!error){
         client.getAccountInfo(function(error, accountInfo) {
            alert("You are " + accountInfo.name + "!");
            console.log("Saving Notes...");
+
            client.writeFile("notes.html", msg.contents, function(error, stat) {
+
+           client.writeFile("notes.html", localStorage.notes, function(error, stat) {
+
 
              alert("File saved as revision " + stat.versionTag);
            });
     });
-      }
       
-    });  });
+      
+
+      });
   
  CKEDITOR.replace('notes');
  
+
+    
+  	
+  	}
+  });
+
  
 </script>
 <link rel="stylesheet" href="ckeditor/contents.css">
@@ -227,7 +255,11 @@ form {
   color: #F2C777;
   margin-bottom: 10px;
 }
-
+@media handheld{
+	.ckeditor{
+		display:none;
+	}
+}
 </style>
 
 </style>
@@ -239,6 +271,8 @@ $(Collaborant.setupConnection);
 <body>
 <div id="header">Collaborant Study Session Hosting <span id="bird">Start Collaborant BIRD</span></div>
 <div class="transponder-sidebar" id="transponder-text">
+            <button id="save">Save</button>
+
 <div id="actions">
     Your PeerJS ID is <span id="pid"></span><br>
     Connect to a peer: <input type="text" id="rid" placeholder="Someone else's id"><input class="button" type="button" value="Connect" id="connect"><br><br>
@@ -269,9 +303,10 @@ NATs.
 <div class="log" style="color:#FF7500;text-shadow:none;padding:15px;background:#eee"><strong>Connection status</strong>:<br></div>
 </div></div>
 </div>
-<div class="vidin-student-stream"><textarea name="notes" id="notes" rows="10" cols="80">
+<div class="vidin-student-stream">
+<form><textarea name="notes" id="notes" rows="10" cols="80">
                 This is my textarea to be replaced with CKEditor.
-            </textarea>
+            </textarea><input type="submit" name="save" value="Save"></form>
             <script>
                 // Replace the <textarea id="editor1"> with a CKEditor
                 // instance, using default configuration.
